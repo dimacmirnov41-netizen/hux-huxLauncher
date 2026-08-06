@@ -12,7 +12,7 @@
 
 ## Установка и запуск 
 
-1.  Скачайте последнюю версию `ZapretLauncher.exe` со страницы [Releases](https://github.com/dimacmirnov41-netizen/ZapretLauncher/releases).
+1.  Скачайте последнюю версию `hux-huxLauncher.exe` со страницы [Releases](https://github.com/dimacmirnov41-netizen/hux-huxLauncher/releases).
 2.  Скачайте версию 1.9.8c с официал страницы Flowseal кому лень вот : [тык](https://github.com/Flowseal/zapret-discord-youtube/releases/tag/1.9.8c) 
 3.  Поместите файл в папку с распакованным **Zapret** (рядом с `service.bat` и папками `bin`, `lists`, `utils`).
-4.  Запустите `ZapretLauncher.exe` от имени администратора.
+4.  Запустите `hux-huxLauncher.exe` от имени администратора.
