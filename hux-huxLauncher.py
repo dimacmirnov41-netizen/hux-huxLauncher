@@ -17,9 +17,279 @@ CURRENT_VERSION = "1.0.7"
 GITHUB_REPO = "dimacmirnov41-netizen/hux-huxLauncher"
 GITHUB_API_URL = f"https://api.github.com/repos/{GITHUB_REPO}/releases/latest"
 
+LANG = {
+    "ru": {
+        "title": "HUX-HUX LAUNCHER",
+        "version": "Версия",
+        "status_not_installed": "Статус: Не установлен",
+        "status_installed": "Статус: Установлен",
+        "status_enabled": "Статус: ВКЛЮЧЕН",
+        "status_disabled": "Статус: ВЫКЛЮЧЕН",
+        "status_removed": "Сервис удалён",
+        "strategies": "СТРАТЕГИИ",
+        "strategies_found": "СТРАТЕГИИ ({})",
+        "strategies_not_found": "СТРАТЕГИИ НЕ НАЙДЕНЫ",
+        "settings": "НАСТРОЙКИ",
+        "open_settings": "ОТКРЫТЬ НАСТРОЙКИ",
+        "refresh": "ОБНОВИТЬ СПИСОК",
+        "remove": "УДАЛИТЬ СЕРВИС",
+        "update_check": "Проверка обновлений...",
+        "update_available": "Доступна версия: {}",
+        "update_latest": "У вас последняя версия",
+        "update_error": "Не удалось проверить обновления",
+        "update_error2": "Ошибка проверки обновлений",
+        "check_updates": "ПРОВЕРИТЬ ОБНОВЛЕНИЯ",
+        "download_update": "СКАЧАТЬ ОБНОВЛЕНИЕ",
+        "no_strategies": "Нет стратегий!\n\nПоложи .bat файлы в папку:\n{}\n\nи нажми 'Обновить список'",
+        "admin_required": "Права администратора",
+        "admin_required_msg": "Для запуска стратегии нужны права администратора.\n\nРазрешить запуск от имени администратора?",
+        "settings_admin": "Внимание!",
+        "settings_admin_msg": "Для настроек нужны права администратора!\nПерезапустите программу от имени администратора.",
+        "service_not_found": "Файл service.bat не найден!\n\nПуть: {}",
+        "remove_confirm": "Подтверждение",
+        "remove_confirm_msg": "Вы уверены, что хотите удалить сервис Zapret?",
+        "update_available_title": "Обновление",
+        "update_available_msg": "Доступна новая версия {}\n\nОткрыть страницу загрузки?",
+        "loading": "Загрузка...",
+        "ready": "Готово!",
+        "steps": ["Загрузка иконок...", "Проверка обновлений...", "Загрузка конфигурации...", "Подготовка интерфейса...", "Запуск..."],
+        "documentation": "Документация",
+        "where_to_click": "КУДА ТЫКАТЬ",
+        "doc_instruction": "В открывшейся консоли введите цифру и нажмите Enter:",
+        "doc_close": "ПОНЯЛ, ЗАКРЫТЬ",
+        "doc_items": [
+            ("1", "Установить сервис"),
+            ("2", "Удалить сервис"),
+            ("3", "Проверить статус"),
+            ("4", "Game Filter"),
+            ("5", "IPSet Filter"),
+            ("6", "Auto-Update"),
+            ("7", "Обновить IPSet"),
+            ("8", "Обновить Hosts"),
+            ("9", "Проверить обновления"),
+            ("10", "Диагностика"),
+            ("11", "Тесты")
+        ]
+    },
+    "en": {
+        "title": "HUX-HUX LAUNCHER",
+        "version": "Version",
+        "status_not_installed": "Status: Not installed",
+        "status_installed": "Status: Installed",
+        "status_enabled": "Status: ENABLED",
+        "status_disabled": "Status: DISABLED",
+        "status_removed": "Service removed",
+        "strategies": "STRATEGIES",
+        "strategies_found": "STRATEGIES ({})",
+        "strategies_not_found": "STRATEGIES NOT FOUND",
+        "settings": "SETTINGS",
+        "open_settings": "OPEN SETTINGS",
+        "refresh": "REFRESH LIST",
+        "remove": "REMOVE SERVICE",
+        "update_check": "Checking for updates...",
+        "update_available": "Version {} available",
+        "update_latest": "You have the latest version",
+        "update_error": "Failed to check updates",
+        "update_error2": "Update check error",
+        "check_updates": "CHECK UPDATES",
+        "download_update": "DOWNLOAD UPDATE",
+        "no_strategies": "No strategies!\n\nPut .bat files in folder:\n{}\n\nand click 'Refresh list'",
+        "admin_required": "Administrator rights",
+        "admin_required_msg": "Administrator rights are required to run strategy.\n\nAllow running as administrator?",
+        "settings_admin": "Attention!",
+        "settings_admin_msg": "Administrator rights required for settings!\nRestart the program as administrator.",
+        "service_not_found": "service.bat file not found!\n\nPath: {}",
+        "remove_confirm": "Confirmation",
+        "remove_confirm_msg": "Are you sure you want to remove the Zapret service?",
+        "update_available_title": "Update",
+        "update_available_msg": "New version {} available\n\nOpen download page?",
+        "loading": "Loading...",
+        "ready": "Ready!",
+        "steps": ["Loading icons...", "Checking updates...", "Loading configuration...", "Preparing interface...", "Starting..."],
+        "documentation": "Documentation",
+        "where_to_click": "WHERE TO CLICK",
+        "doc_instruction": "In the opened console, enter the number and press Enter:",
+        "doc_close": "GOT IT, CLOSE",
+        "doc_items": [
+            ("1", "Install service"),
+            ("2", "Remove service"),
+            ("3", "Check status"),
+            ("4", "Game Filter"),
+            ("5", "IPSet Filter"),
+            ("6", "Auto-Update"),
+            ("7", "Update IPSet"),
+            ("8", "Update Hosts"),
+            ("9", "Check updates"),
+            ("10", "Diagnostics"),
+            ("11", "Run Tests")
+        ]
+    },
+    "uk": {
+        "title": "HUX-HUX LAUNCHER",
+        "version": "Версія",
+        "status_not_installed": "Статус: Не встановлено",
+        "status_installed": "Статус: Встановлено",
+        "status_enabled": "Статус: УВІМКНЕНО",
+        "status_disabled": "Статус: ВИМКНЕНО",
+        "status_removed": "Сервіс видалено",
+        "strategies": "СТРАТЕГІЇ",
+        "strategies_found": "СТРАТЕГІЇ ({})",
+        "strategies_not_found": "СТРАТЕГІЇ НЕ ЗНАЙДЕНО",
+        "settings": "НАЛАШТУВАННЯ",
+        "open_settings": "ВІДКРИТИ НАЛАШТУВАННЯ",
+        "refresh": "ОНОВИТИ СПИСОК",
+        "remove": "ВИДАЛИТИ СЕРВІС",
+        "update_check": "Перевірка оновлень...",
+        "update_available": "Доступна версія: {}",
+        "update_latest": "У вас остання версія",
+        "update_error": "Не вдалося перевірити оновлення",
+        "update_error2": "Помилка перевірки оновлень",
+        "check_updates": "ПЕРЕВІРИТИ ОНОВЛЕННЯ",
+        "download_update": "ЗАВАНТАЖИТИ ОНОВЛЕННЯ",
+        "no_strategies": "Немає стратегій!\n\nПоклади .bat файли в папку:\n{}\n\nі натисни 'Оновити список'",
+        "admin_required": "Права адміністратора",
+        "admin_required_msg": "Для запуску стратегії потрібні права адміністратора.\n\nДозволити запуск від імені адміністратора?",
+        "settings_admin": "Увага!",
+        "settings_admin_msg": "Для налаштувань потрібні права адміністратора!\nПерезапустіть програму від імені адміністратора.",
+        "service_not_found": "Файл service.bat не знайдено!\n\nШлях: {}",
+        "remove_confirm": "Підтвердження",
+        "remove_confirm_msg": "Ви впевнені, що хочете видалити сервіс Zapret?",
+        "update_available_title": "Оновлення",
+        "update_available_msg": "Доступна нова версія {}\n\nВідкрити сторінку завантаження?",
+        "loading": "Завантаження...",
+        "ready": "Готово!",
+        "steps": ["Завантаження іконок...", "Перевірка оновлень...", "Завантаження конфігурації...", "Підготовка інтерфейсу...", "Запуск..."],
+        "documentation": "Документація",
+        "where_to_click": "КУДИ ТИКАТИ",
+        "doc_instruction": "У відкритій консолі введіть цифру і натисніть Enter:",
+        "doc_close": "ЗРОЗУМІВ, ЗАКРИТИ",
+        "doc_items": [
+            ("1", "Встановити сервіс"),
+            ("2", "Видалити сервіс"),
+            ("3", "Перевірити статус"),
+            ("4", "Game Filter"),
+            ("5", "IPSet Filter"),
+            ("6", "Auto-Update"),
+            ("7", "Оновити IPSet"),
+            ("8", "Оновити Hosts"),
+            ("9", "Перевірити оновлення"),
+            ("10", "Діагностика"),
+            ("11", "Тести")
+        ]
+    },
+    "be": {
+        "title": "HUX-HUX LAUNCHER",
+        "version": "Версія",
+        "status_not_installed": "Статус: Не ўсталявана",
+        "status_installed": "Статус: Усталявана",
+        "status_enabled": "Статус: УКЛЮЧАНА",
+        "status_disabled": "Статус: ВЫКЛЮЧАНА",
+        "status_removed": "Сэрвіс выдалены",
+        "strategies": "СТРАТЭГІІ",
+        "strategies_found": "СТРАТЭГІІ ({})",
+        "strategies_not_found": "СТРАТЭГІІ НЕ ЗНОЙДЗЕНЫ",
+        "settings": "НАЛАДКІ",
+        "open_settings": "АДКРЫЦЬ НАЛАДКІ",
+        "refresh": "АБНАВІЦЬ СПІС",
+        "remove": "ВЫДАЛІЦЬ СЭРВІС",
+        "update_check": "Праверка абнаўленняў...",
+        "update_available": "Даступная версія: {}",
+        "update_latest": "У вас апошняя версія",
+        "update_error": "Не ўдалося праверыць абнаўленні",
+        "update_error2": "Памылка праверкі абнаўленняў",
+        "check_updates": "ПРАВЕРЫЦЬ АБНАЎЛЕННІ",
+        "download_update": "СЦЯГНУЦЬ АБНАЎЛЕННЕ",
+        "no_strategies": "Няма стратэгій!\n\nПакладзі .bat файлы ў папку:\n{}\n\nі націсні 'Абнавіць спіс'",
+        "admin_required": "Правы адміністратара",
+        "admin_required_msg": "Для запуску стратэгіі патрэбны правы адміністратара.\n\nДазволіць запуск ад імя адміністратара?",
+        "settings_admin": "Увага!",
+        "settings_admin_msg": "Для наладак патрэбны правы адміністратара!\nПеразапусціце праграму ад імя адміністратара.",
+        "service_not_found": "Файл service.bat не знойдзены!\n\nШлях: {}",
+        "remove_confirm": "Пацверджанне",
+        "remove_confirm_msg": "Вы ўпэўнены, што хочаце выдаліць сэрвіс Zapret?",
+        "update_available_title": "Абнаўленне",
+        "update_available_msg": "Даступная новая версія {}\n\nАдкрыць старонку загрузкі?",
+        "loading": "Загрузка...",
+        "ready": "Гатова!",
+        "steps": ["Загрузка іконак...", "Праверка абнаўленняў...", "Загрузка канфігурацыі...", "Падрыхтоўка інтэрфейсу...", "Запуск..."],
+        "documentation": "Дакументацыя",
+        "where_to_click": "КУДЫ ТЫКАЦЬ",
+        "doc_instruction": "У адкрытай кансолі ўвядзіце лічбу і націсніце Enter:",
+        "doc_close": "ЗРАЗУМЕЎ, ЗАКРЫЦЬ",
+        "doc_items": [
+            ("1", "Усталяваць сэрвіс"),
+            ("2", "Выдаліць сэрвіс"),
+            ("3", "Праверыць статус"),
+            ("4", "Game Filter"),
+            ("5", "IPSet Filter"),
+            ("6", "Auto-Update"),
+            ("7", "Абнавіць IPSet"),
+            ("8", "Абнавіць Hosts"),
+            ("9", "Праверыць абнаўленні"),
+            ("10", "Дыягностыка"),
+            ("11", "Тэсты")
+        ]
+    },
+    "brat": {
+        "title": "HUX-HUX LAUNCHER",
+        "version": "Версия",
+        "status_not_installed": "Статус: Не врублен",
+        "status_installed": "Статус: Врублен",
+        "status_enabled": "Статус: ЗАПУЩЕН",
+        "status_disabled": "Статус: ЗАГЛУШЕН",
+        "status_removed": "Сервис вырезан",
+        "strategies": "СТРАТЕГИИ",
+        "strategies_found": "СТРАТЕГИИ ({})",
+        "strategies_not_found": "СТРАТЕГИЙ НЕТ, БРАТ",
+        "settings": "НАСТРОЙКИ",
+        "open_settings": "ГЛЯНУТЬ НАСТРОЙКИ",
+        "refresh": "ОБНОВИТЬ СПИСОК",
+        "remove": "ВЫРУБИТЬ СЕРВИС",
+        "update_check": "Проверка обнов...",
+        "update_available": "Есть новая версия: {}",
+        "update_latest": "Ты в теме, брат! Последняя версия",
+        "update_error": "Не пробить обновы",
+        "update_error2": "Ошибка с обновами",
+        "check_updates": "ПРОВЕРИТЬ ОБНОВЫ",
+        "download_update": "ЗАБРАТЬ ОБНОВУ",
+        "no_strategies": "Стратегий нет!\n\nКидай .bat файлы в папку:\n{}\n\nи жми 'Обновить список'",
+        "admin_required": "Права админа",
+        "admin_required_msg": "Для запуска стратегии нужны права админа.\n\nРазрешишь запуск от админа?",
+        "settings_admin": "Внимание!",
+        "settings_admin_msg": "Для настроек нужны права админа!\nПерезапусти прогу от админа.",
+        "service_not_found": "Файл service.bat не найден!\n\nПуть: {}",
+        "remove_confirm": "Подтверди",
+        "remove_confirm_msg": "Точно хочешь вырубить сервис Zapret?",
+        "update_available_title": "Обнова",
+        "update_available_msg": "Есть новая версия {}\n\nОткрыть страницу загрузки?",
+        "loading": "Грузим...",
+        "ready": "Готово, брат!",
+        "steps": ["Грузим иконки...", "Проверяем обновы...", "Грузим конфиг...", "Готовим интерфейс...", "Погнали..."],
+        "documentation": "Документация",
+        "where_to_click": "КУДА ТЫКАТЬ, БРАТ",
+        "doc_instruction": "В открывшейся консоли введи цифру и жми Enter:",
+        "doc_close": "ВРУБИЛСЯ, ЗАКРЫТЬ",
+        "doc_items": [
+            ("1", "Врубить сервис"),
+            ("2", "Вырубить сервис"),
+            ("3", "Проверить статус"),
+            ("4", "Game Filter"),
+            ("5", "IPSet Filter"),
+            ("6", "Auto-Update"),
+            ("7", "Обновить IPSet"),
+            ("8", "Обновить Hosts"),
+            ("9", "Проверить обновы"),
+            ("10", "Диагностика"),
+            ("11", "Тесты")
+        ]
+    }
+}
+
 class SplashScreen(ctk.CTkToplevel):
-    def __init__(self):
+    def __init__(self, lang="ru"):
         super().__init__()
+        self.lang = lang
+        self.text = LANG[lang]
         self.title("")
         self.geometry("400x480")
         self.resizable(False, False)
@@ -43,10 +313,10 @@ class SplashScreen(ctk.CTkToplevel):
         self.top_frame.pack(fill="x", pady=(30, 0))
         self.top_frame.pack_propagate(False)
 
-        self.title_label = ctk.CTkLabel(self.top_frame, text="HUX-HUX LAUNCHER", font=ctk.CTkFont(size=32, weight="bold"), text_color="#00d4ff")
+        self.title_label = ctk.CTkLabel(self.top_frame, text=self.text["title"], font=ctk.CTkFont(size=32, weight="bold"), text_color="#00d4ff")
         self.title_label.pack(pady=(10, 0))
 
-        self.version_label = ctk.CTkLabel(self.top_frame, text=f"Версия {CURRENT_VERSION}", font=ctk.CTkFont(size=13), text_color="#718096")
+        self.version_label = ctk.CTkLabel(self.top_frame, text=f"{self.text['version']} {CURRENT_VERSION}", font=ctk.CTkFont(size=13), text_color=("black", "white"))
         self.version_label.pack()
 
         self.center_frame = ctk.CTkFrame(self.main_frame, fg_color="transparent")
@@ -71,20 +341,14 @@ class SplashScreen(ctk.CTkToplevel):
         self.bottom_frame.pack(fill="x", pady=(0, 30))
         self.bottom_frame.pack_propagate(False)
 
-        self.status_label = ctk.CTkLabel(self.bottom_frame, text="Загрузка...", font=ctk.CTkFont(size=13), text_color="#a0aec0")
+        self.status_label = ctk.CTkLabel(self.bottom_frame, text=self.text["loading"], font=ctk.CTkFont(size=13), text_color=("black", "white"))
         self.status_label.pack(pady=(0, 8))
 
         self.progress = ctk.CTkProgressBar(self.bottom_frame, width=320, height=6, corner_radius=3, fg_color="#2d3748", progress_color="#00d4ff")
         self.progress.pack()
         self.progress.set(0)
 
-        self.steps = [
-            "Загрузка иконок...",
-            "Проверка обновлений...",
-            "Загрузка конфигурации...",
-            "Подготовка интерфейса...",
-            "Запуск..."
-        ]
+        self.steps = self.text["steps"]
         self.current_step = 0
         self.start_time = time.time()
         self.animate_progress()
@@ -96,7 +360,9 @@ class SplashScreen(ctk.CTkToplevel):
             self.gif_durations = []
             with Image.open(gif_path) as img:
                 while True:
-                    self.gif_frames.append(ImageTk.PhotoImage(img.copy()))
+                    frame = img.copy()
+                    frame.thumbnail((350, 350), Image.LANCZOS)
+                    self.gif_frames.append(ImageTk.PhotoImage(frame))
                     self.gif_durations.append(img.info.get('duration', 100))
                     try:
                         img.seek(img.tell() + 1)
@@ -134,14 +400,16 @@ class SplashScreen(ctk.CTkToplevel):
         if progress < 1.0:
             self.after(20, self.animate_progress)
         else:
-            self.status_label.configure(text="Готово!")
+            self.status_label.configure(text=self.text["ready"])
             self.progress.set(1.0)
             self.after(300, self.destroy)
 
 class HelpWindow(ctk.CTkToplevel):
-    def __init__(self):
+    def __init__(self, lang="ru"):
         super().__init__()
-        self.title("Документация")
+        self.lang = lang
+        self.text = LANG[lang]
+        self.title(self.text["documentation"])
         self.geometry("420x450")
         self.resizable(False, False)
         self.configure(fg_color=("#0a0a1a", "#0d0d2b"))
@@ -158,47 +426,35 @@ class HelpWindow(ctk.CTkToplevel):
         except:
             pass
 
-        self.title_label = ctk.CTkLabel(self, text="КУДА ТЫКАТЬ", font=ctk.CTkFont(size=24, weight="bold"), text_color="#00d4ff")
+        self.title_label = ctk.CTkLabel(self, text=self.text["where_to_click"], font=ctk.CTkFont(size=24, weight="bold"), text_color="#00d4ff")
         self.title_label.pack(pady=(15, 5))
 
-        self.info_label = ctk.CTkLabel(self, text="В открывшейся консоли введите цифру и нажмите Enter:", font=ctk.CTkFont(size=14), text_color="#a0aec0")
+        self.info_label = ctk.CTkLabel(self, text=self.text["doc_instruction"], font=ctk.CTkFont(size=14), text_color=("black", "white"))
         self.info_label.pack(pady=(0, 10))
 
         frame = ctk.CTkFrame(self, fg_color=("#1a1a2e", "#16213e"), corner_radius=10, border_width=1, border_color="#00d4ff")
         frame.pack(pady=5, padx=20, fill="x")
 
-        items = [
-            ("1", "Установить сервис"),
-            ("2", "Удалить сервис"),
-            ("3", "Проверить статус"),
-            ("4", "Game Filter"),
-            ("5", "IPSet Filter"),
-            ("6", "Auto-Update"),
-            ("7", "Обновить IPSet"),
-            ("8", "Обновить Hosts"),
-            ("9", "Проверить обновления"),
-            ("10", "Диагностика"),
-            ("11", "Тесты")
-        ]
-
-        for i, (num, desc) in enumerate(items):
+        for i, (num, desc) in enumerate(self.text["doc_items"]):
             row = i // 2
             col = i % 2
-            label = ctk.CTkLabel(frame, text=f"{num} -> {desc}", font=ctk.CTkFont(size=13), text_color="#a0aec0")
+            label = ctk.CTkLabel(frame, text=f"{num} -> {desc}", font=ctk.CTkFont(size=13), text_color=("black", "white"))
             label.grid(row=row, column=col, padx=10, pady=3, sticky="w")
 
         frame.grid_columnconfigure(0, weight=1)
         frame.grid_columnconfigure(1, weight=1)
 
-        self.close_btn = ctk.CTkButton(self, text="ПОНЯЛ, ЗАКРЫТЬ", command=self.destroy, font=ctk.CTkFont(size=14, weight="bold"), height=40, corner_radius=10, fg_color="#00b894", hover_color="#00a381")
+        self.close_btn = ctk.CTkButton(self, text=self.text["doc_close"], command=self.destroy, font=ctk.CTkFont(size=14, weight="bold"), height=40, corner_radius=10, fg_color="#00b894", hover_color="#00a381")
         self.close_btn.pack(pady=(15, 15), padx=40, fill="x")
 
 class HuxHuxLauncher(ctk.CTk):
     def __init__(self):
         super().__init__()
+        self.lang = "ru"
+        self.text = LANG[self.lang]
         self.withdraw()
         self.title("hux-huxLauncher")
-        self.geometry("550x800")
+        self.geometry("580x820")
         self.resizable(False, False)
         self.configure(fg_color=("#0a0a1a", "#0d0d2b"))
 
@@ -219,28 +475,52 @@ class HuxHuxLauncher(ctk.CTk):
         self.latest_version = ""
         self.download_url = ""
 
+        self.top_controls = ctk.CTkFrame(self, fg_color="transparent", height=50)
+        self.top_controls.pack(pady=(10, 0), padx=20, fill="x")
+        self.top_controls.pack_propagate(False)
+
+        self.lang_frame = ctk.CTkFrame(self.top_controls, fg_color="transparent")
+        self.lang_frame.pack(side="right", padx=5)
+
+        self.lang_label = ctk.CTkLabel(self.lang_frame, text="🌐", font=ctk.CTkFont(size=14))
+        self.lang_label.pack(side="left", padx=(0, 5))
+
+        self.lang_switch = ctk.CTkOptionMenu(
+            self.lang_frame,
+            values=["RU", "EN", "UA", "BE", "BRAT"],
+            command=self.change_lang,
+            font=ctk.CTkFont(size=12, weight="bold"),
+            fg_color="#2d3748",
+            button_color="#00d4ff",
+            button_hover_color="#0077b6",
+            width=80,
+            height=30
+        )
+        self.lang_switch.pack(side="left")
+        self.lang_switch.set("RU")
+
         self.header_frame = ctk.CTkFrame(self, fg_color="transparent")
-        self.header_frame.pack(pady=(20, 5), fill="x")
-        self.title_label = ctk.CTkLabel(self.header_frame, text="HUX-HUX LAUNCHER", font=ctk.CTkFont(size=30, weight="bold"), text_color="#00d4ff")
+        self.header_frame.pack(pady=(5, 5), fill="x")
+        self.title_label = ctk.CTkLabel(self.header_frame, text=self.text["title"], font=ctk.CTkFont(size=30, weight="bold"), text_color="#00d4ff")
         self.title_label.pack()
-        self.version_label = ctk.CTkLabel(self.header_frame, text=f"Версия {CURRENT_VERSION} | Выберите стратегию", font=ctk.CTkFont(size=12), text_color="#718096")
+        self.version_label = ctk.CTkLabel(self.header_frame, text=f"{self.text['version']} {CURRENT_VERSION} | {self.text['strategies']}", font=ctk.CTkFont(size=12), text_color=("black", "white"))
         self.version_label.pack(pady=(0, 5))
 
         self.update_frame = ctk.CTkFrame(self, fg_color=("#1a1a2e", "#16213e"), corner_radius=10, border_width=1, border_color="#f39c12")
         self.update_frame.pack(pady=5, padx=25, fill="x")
-        self.update_label = ctk.CTkLabel(self.update_frame, text="Проверка обновлений...", font=ctk.CTkFont(size=12), text_color="#a0aec0")
+        self.update_label = ctk.CTkLabel(self.update_frame, text=self.text["update_check"], font=ctk.CTkFont(size=12), text_color=("black", "white"))
         self.update_label.pack(pady=5)
-        self.update_btn = ctk.CTkButton(self.update_frame, text="ПРОВЕРИТЬ ОБНОВЛЕНИЯ", command=self.check_updates, font=ctk.CTkFont(size=12, weight="bold"), height=30, corner_radius=8, fg_color="#2d3748", hover_color="#4a5568")
+        self.update_btn = ctk.CTkButton(self.update_frame, text=self.text["check_updates"], command=self.check_updates, font=ctk.CTkFont(size=12, weight="bold"), height=30, corner_radius=8, fg_color="#2d3748", hover_color="#4a5568")
         self.update_btn.pack(pady=(0, 5))
 
         self.status_frame = ctk.CTkFrame(self, fg_color=("#1a1a2e", "#16213e"), corner_radius=12, border_width=1, border_color="#00d4ff")
         self.status_frame.pack(pady=5, padx=25, fill="x")
-        self.status_label = ctk.CTkLabel(self.status_frame, text="Статус: Не установлен", font=ctk.CTkFont(size=14, weight="bold"), text_color="#fc8181")
+        self.status_label = ctk.CTkLabel(self.status_frame, text=self.text["status_not_installed"], font=ctk.CTkFont(size=14, weight="bold"), text_color=("black", "white"))
         self.status_label.pack(pady=8)
 
         self.list_frame = ctk.CTkFrame(self, fg_color=("#1a1a2e", "#16213e"), corner_radius=15, border_width=2, border_color="#00d4ff")
         self.list_frame.pack(pady=10, padx=25, fill="both", expand=True)
-        self.list_label = ctk.CTkLabel(self.list_frame, text="СТРАТЕГИИ", font=ctk.CTkFont(size=14, weight="bold"), text_color="#00d4ff")
+        self.list_label = ctk.CTkLabel(self.list_frame, text=self.text["strategies"], font=ctk.CTkFont(size=14, weight="bold"), text_color=("black", "white"))
         self.list_label.pack(pady=(10, 5))
         self.scroll_frame = ctk.CTkScrollableFrame(self.list_frame, fg_color="transparent", height=280)
         self.scroll_frame.pack(pady=5, padx=10, fill="both", expand=True)
@@ -248,26 +528,51 @@ class HuxHuxLauncher(ctk.CTk):
 
         self.settings_frame = ctk.CTkFrame(self, fg_color=("#1a1a2e", "#16213e"), corner_radius=15, border_width=2, border_color="#f39c12")
         self.settings_frame.pack(pady=10, padx=25, fill="x")
-        self.settings_label = ctk.CTkLabel(self.settings_frame, text="НАСТРОЙКИ", font=ctk.CTkFont(size=14, weight="bold"), text_color="#f39c12")
+        self.settings_label = ctk.CTkLabel(self.settings_frame, text=self.text["settings"], font=ctk.CTkFont(size=14, weight="bold"), text_color=("black", "white"))
         self.settings_label.pack(pady=(8, 5))
-
-        self.settings_btn = ctk.CTkButton(self.settings_frame, text="ОТКРЫТЬ НАСТРОЙКИ", command=self.open_settings, font=ctk.CTkFont(size=15, weight="bold"), height=45, corner_radius=10, fg_color="#2d3748", hover_color="#4a5568", border_width=1, border_color="#f39c12")
+        self.settings_btn = ctk.CTkButton(self.settings_frame, text=self.text["open_settings"], command=self.open_settings, font=ctk.CTkFont(size=15, weight="bold"), height=45, corner_radius=10, fg_color="#2d3748", hover_color="#4a5568", border_width=1, border_color="#f39c12")
         self.settings_btn.pack(pady=(5, 10), padx=15, fill="x")
 
         self.btn_frame = ctk.CTkFrame(self, fg_color="transparent")
         self.btn_frame.pack(pady=5, padx=25, fill="x")
-        self.refresh_btn = ctk.CTkButton(self.btn_frame, text="ОБНОВИТЬ СПИСОК", command=self.refresh_strategies, font=ctk.CTkFont(size=13, weight="bold"), height=35, corner_radius=10, fg_color="#4a5568", hover_color="#718096")
+        self.refresh_btn = ctk.CTkButton(self.btn_frame, text=self.text["refresh"], command=self.refresh_strategies, font=ctk.CTkFont(size=13, weight="bold"), height=35, corner_radius=10, fg_color="#4a5568", hover_color="#718096")
         self.refresh_btn.grid(row=0, column=0, padx=5, pady=5, sticky="ew")
-        self.remove_btn = ctk.CTkButton(self.btn_frame, text="УДАЛИТЬ СЕРВИС", command=self.remove_service, font=ctk.CTkFont(size=13, weight="bold"), height=35, corner_radius=10, fg_color="#e53e3e", hover_color="#c53030", state="disabled")
+        self.remove_btn = ctk.CTkButton(self.btn_frame, text=self.text["remove"], command=self.remove_service, font=ctk.CTkFont(size=13, weight="bold"), height=35, corner_radius=10, fg_color="#e53e3e", hover_color="#c53030", state="disabled")
         self.remove_btn.grid(row=0, column=1, padx=5, pady=5, sticky="ew")
         self.btn_frame.grid_columnconfigure(0, weight=1)
         self.btn_frame.grid_columnconfigure(1, weight=1)
 
-        self.footer_label = ctk.CTkLabel(self, text=f"{self.zapret_path}", font=ctk.CTkFont(size=9), text_color="#4a5568")
+        self.footer_label = ctk.CTkLabel(self, text=f"{self.zapret_path}", font=ctk.CTkFont(size=9), text_color=("black", "white"))
         self.footer_label.pack(pady=(0, 10))
 
         self.after(1000, self.check_updates)
         self.after(500, self.check_status)
+
+    def change_lang(self, choice):
+        lang_map = {
+            "RU": "ru",
+            "EN": "en",
+            "UA": "uk",
+            "BE": "be",
+            "BRAT": "brat"
+        }
+        self.lang = lang_map.get(choice, "ru")
+        self.text = LANG[self.lang]
+        self.update_ui_text()
+
+    def update_ui_text(self):
+        self.title_label.configure(text=self.text["title"])
+        self.version_label.configure(text=f"{self.text['version']} {CURRENT_VERSION} | {self.text['strategies']}")
+        self.update_label.configure(text=self.text["update_check"])
+        self.update_btn.configure(text=self.text["check_updates"])
+        self.status_label.configure(text=self.text["status_not_installed"])
+        self.list_label.configure(text=self.text["strategies"])
+        self.settings_label.configure(text=self.text["settings"])
+        self.settings_btn.configure(text=self.text["open_settings"])
+        self.refresh_btn.configure(text=self.text["refresh"])
+        self.remove_btn.configure(text=self.text["remove"])
+        self.load_strategies()
+        self.check_status()
 
     def compare_versions(self, v1, v2):
         v1_parts = [int(x) for x in v1.split('.')]
@@ -285,7 +590,7 @@ class HuxHuxLauncher(ctk.CTk):
     def check_updates(self):
         def check():
             try:
-                self.update_label.configure(text="Проверка обновлений...", text_color="#f39c12")
+                self.update_label.configure(text=self.text["update_check"], text_color="#f39c12")
                 response = requests.get(GITHUB_API_URL, timeout=10)
                 if response.status_code == 200:
                     data = response.json()
@@ -295,21 +600,21 @@ class HuxHuxLauncher(ctk.CTk):
                         self.update_available = True
                         self.latest_version = latest
                         self.download_url = data.get("html_url", "")
-                        self.update_label.configure(text=f"Доступна версия: {latest}", text_color="#48bb78")
-                        self.update_btn.configure(text="СКАЧАТЬ ОБНОВЛЕНИЕ", fg_color="#00b894", hover_color="#00a381", command=self.download_update)
+                        self.update_label.configure(text=self.text["update_available"].format(latest), text_color="#48bb78")
+                        self.update_btn.configure(text=self.text["download_update"], fg_color="#00b894", hover_color="#00a381", command=self.download_update)
                     else:
-                        self.update_label.configure(text="У вас последняя версия", text_color="#48bb78")
-                        self.update_btn.configure(text="ПРОВЕРИТЬ ОБНОВЛЕНИЯ", fg_color="#2d3748", hover_color="#4a5568", command=self.check_updates)
+                        self.update_label.configure(text=self.text["update_latest"], text_color="#48bb78")
+                        self.update_btn.configure(text=self.text["check_updates"], fg_color="#2d3748", hover_color="#4a5568", command=self.check_updates)
                 else:
-                    self.update_label.configure(text="Не удалось проверить обновления", text_color="#fc8181")
+                    self.update_label.configure(text=self.text["update_error"], text_color="#fc8181")
             except:
-                self.update_label.configure(text="Ошибка проверки обновлений", text_color="#fc8181")
+                self.update_label.configure(text=self.text["update_error2"], text_color="#fc8181")
 
         Thread(target=check, daemon=True).start()
 
     def download_update(self):
         if self.download_url:
-            if messagebox.askyesno("Обновление", f"Доступна новая версия {self.latest_version}\n\nОткрыть страницу загрузки?"):
+            if messagebox.askyesno(self.text["update_available_title"], self.text["update_available_msg"].format(self.latest_version)):
                 webbrowser.open(self.download_url)
 
     def get_all_bat_files(self):
@@ -333,11 +638,11 @@ class HuxHuxLauncher(ctk.CTk):
                 display_name = name.replace('.bat', '')
                 btn = ctk.CTkButton(self.scroll_frame, text=f"> {display_name}", command=lambda n=name: self.run_strategy(n), font=ctk.CTkFont(size=12), height=35, corner_radius=8, fg_color="#2d3748", hover_color="#00b894", anchor="w", border_width=1, border_color="#4a5568")
                 btn.pack(pady=2, padx=5, fill="x")
-            self.list_label.configure(text=f"СТРАТЕГИИ ({len(self.strategies)})")
+            self.list_label.configure(text=self.text["strategies_found"].format(len(self.strategies)))
         else:
-            label = ctk.CTkLabel(self.scroll_frame, text="Нет стратегий!\n\nПоложи .bat файлы в папку:\n" + f"{self.zapret_path}\n\nи нажми 'Обновить список'", font=ctk.CTkFont(size=13), text_color="#fc8181", justify="center")
+            label = ctk.CTkLabel(self.scroll_frame, text=self.text["no_strategies"].format(self.zapret_path), font=ctk.CTkFont(size=13), text_color="#fc8181", justify="center")
             label.pack(pady=30)
-            self.list_label.configure(text="СТРАТЕГИИ НЕ НАЙДЕНЫ")
+            self.list_label.configure(text=self.text["strategies_not_found"])
 
     def refresh_strategies(self):
         self.load_strategies()
@@ -345,7 +650,7 @@ class HuxHuxLauncher(ctk.CTk):
 
     def run_strategy(self, name):
         if not ctypes.windll.shell32.IsUserAnAdmin():
-            if not messagebox.askyesno("Права администратора", "Для запуска стратегии нужны права администратора.\n\nРазрешить запуск от имени администратора?"):
+            if not messagebox.askyesno(self.text["admin_required"], self.text["admin_required_msg"]):
                 return
             script = os.path.abspath(sys.argv[0])
             ctypes.windll.shell32.ShellExecuteW(None, "runas", script, "", None, 1)
@@ -363,18 +668,18 @@ class HuxHuxLauncher(ctk.CTk):
 
     def open_settings(self):
         if not ctypes.windll.shell32.IsUserAnAdmin():
-            messagebox.showwarning("Внимание!", "Для настроек нужны права администратора!\nПерезапустите программу от имени администратора.")
+            messagebox.showwarning(self.text["settings_admin"], self.text["settings_admin_msg"])
             return
 
         try:
             service_path = os.path.join(self.zapret_path, "service.bat")
             if not os.path.exists(service_path):
-                messagebox.showerror("Ошибка", f"Файл service.bat не найден!\n\nПуть: {self.zapret_path}")
+                messagebox.showerror("Ошибка", self.text["service_not_found"].format(self.zapret_path))
                 return
 
             subprocess.Popen(f'start cmd /c "{service_path}" admin', cwd=self.zapret_path, shell=True)
 
-            help_window = HelpWindow()
+            help_window = HelpWindow(self.lang)
             help_window.focus()
 
         except Exception as e:
@@ -386,25 +691,25 @@ class HuxHuxLauncher(ctk.CTk):
             if result.returncode == 0:
                 self.remove_btn.configure(state="normal")
                 if "RUNNING" in result.stdout:
-                    self.status_label.configure(text="Статус: ВКЛЮЧЕН", text_color="#48bb78")
+                    self.status_label.configure(text=self.text["status_enabled"], text_color="#48bb78")
                 else:
-                    self.status_label.configure(text="Статус: ВЫКЛЮЧЕН", text_color="#f39c12")
+                    self.status_label.configure(text=self.text["status_disabled"], text_color="#f39c12")
             else:
                 self.remove_btn.configure(state="disabled")
-                self.status_label.configure(text="Статус: НЕ УСТАНОВЛЕН", text_color="#fc8181")
+                self.status_label.configure(text=self.text["status_not_installed"], text_color="#fc8181")
         except:
             pass
 
     def remove_service(self):
-        if not messagebox.askyesno("Подтверждение", "Вы уверены, что хотите удалить сервис Zapret?"):
+        if not messagebox.askyesno(self.text["remove_confirm"], self.text["remove_confirm_msg"]):
             return
         if not ctypes.windll.shell32.IsUserAnAdmin():
-            messagebox.showwarning("Внимание!", "Для удаления нужны права администратора!\nПерезапустите программу от имени администратора.")
+            messagebox.showwarning(self.text["settings_admin"], self.text["settings_admin_msg"])
             return
         try:
             subprocess.run('net stop zapret', capture_output=True, shell=True, timeout=10, creationflags=subprocess.CREATE_NO_WINDOW)
             subprocess.run('sc delete zapret', capture_output=True, shell=True, timeout=10, creationflags=subprocess.CREATE_NO_WINDOW)
-            self.status_label.configure(text="Сервис удалён", text_color="#fc8181")
+            self.status_label.configure(text=self.text["status_removed"], text_color="#fc8181")
             self.after(1000, self.check_status)
         except Exception as e:
             messagebox.showerror("Ошибка", str(e))
