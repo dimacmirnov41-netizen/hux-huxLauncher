@@ -8,6 +8,7 @@ import requests
 import webbrowser
 from tkinter import messagebox
 from threading import Thread
+from PIL import Image, ImageTk
 
 ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("blue")
@@ -20,13 +21,13 @@ class SplashScreen(ctk.CTkToplevel):
     def __init__(self):
         super().__init__()
         self.title("")
-        self.geometry("400x320")
+        self.geometry("400x480")
         self.resizable(False, False)
         self.overrideredirect(True)
         self.configure(fg_color=("#0a0a1a", "#0d0d2b"))
         self.update_idletasks()
         x = (self.winfo_screenwidth() // 2) - 200
-        y = (self.winfo_screenheight() // 2) - 160
+        y = (self.winfo_screenheight() // 2) - 240
         self.geometry(f"+{x}+{y}")
         try:
             icon_path = os.path.join(os.path.dirname(os.path.abspath(sys.argv[0] if getattr(sys, 'frozen', False) else __file__)), "icon.ico")
@@ -34,20 +35,49 @@ class SplashScreen(ctk.CTkToplevel):
                 self.iconbitmap(icon_path)
         except:
             pass
-        
-        self.title_label = ctk.CTkLabel(self, text="ZAPRET LAUNCHER", font=ctk.CTkFont(size=36, weight="bold"), text_color="#00d4ff")
-        self.title_label.pack(pady=(50, 5))
-        
-        self.version_label = ctk.CTkLabel(self, text=f"Версия {CURRENT_VERSION}", font=ctk.CTkFont(size=16), text_color="#718096")
-        self.version_label.pack(pady=(0, 15))
-        
-        self.status_label = ctk.CTkLabel(self, text="Загрузка...", font=ctk.CTkFont(size=13), text_color="#a0aec0")
-        self.status_label.pack(pady=(10, 5))
-        
-        self.progress = ctk.CTkProgressBar(self, width=300, height=8, corner_radius=4, fg_color="#2d3748", progress_color="#00d4ff")
-        self.progress.pack(pady=(15, 0))
+
+        self.main_frame = ctk.CTkFrame(self, fg_color="transparent")
+        self.main_frame.pack(fill="both", expand=True)
+
+        self.top_frame = ctk.CTkFrame(self.main_frame, fg_color="transparent", height=70)
+        self.top_frame.pack(fill="x", pady=(30, 0))
+        self.top_frame.pack_propagate(False)
+
+        self.title_label = ctk.CTkLabel(self.top_frame, text="HUX-HUX LAUNCHER", font=ctk.CTkFont(size=32, weight="bold"), text_color="#00d4ff")
+        self.title_label.pack(pady=(10, 0))
+
+        self.version_label = ctk.CTkLabel(self.top_frame, text=f"Версия {CURRENT_VERSION}", font=ctk.CTkFont(size=13), text_color="#718096")
+        self.version_label.pack()
+
+        self.center_frame = ctk.CTkFrame(self.main_frame, fg_color="transparent")
+        self.center_frame.pack(fill="both", expand=True)
+
+        self.gif_label = ctk.CTkLabel(self.center_frame, text="")
+        self.gif_label.pack(expand=True)
+
+        if getattr(sys, 'frozen', False):
+            base_path = sys._MEIPASS
+        else:
+            base_path = os.path.dirname(os.path.abspath(__file__))
+
+        gif_path = os.path.join(base_path, "hux.gif")
+
+        if os.path.exists(gif_path):
+            self.load_gif(gif_path)
+        else:
+            self.gif_label.configure(text="", font=ctk.CTkFont(size=80))
+
+        self.bottom_frame = ctk.CTkFrame(self.main_frame, fg_color="transparent", height=100)
+        self.bottom_frame.pack(fill="x", pady=(0, 30))
+        self.bottom_frame.pack_propagate(False)
+
+        self.status_label = ctk.CTkLabel(self.bottom_frame, text="Загрузка...", font=ctk.CTkFont(size=13), text_color="#a0aec0")
+        self.status_label.pack(pady=(0, 8))
+
+        self.progress = ctk.CTkProgressBar(self.bottom_frame, width=320, height=6, corner_radius=3, fg_color="#2d3748", progress_color="#00d4ff")
+        self.progress.pack()
         self.progress.set(0)
-        
+
         self.steps = [
             "Загрузка иконок...",
             "Проверка обновлений...",
@@ -58,20 +88,49 @@ class SplashScreen(ctk.CTkToplevel):
         self.current_step = 0
         self.start_time = time.time()
         self.animate_progress()
-    
+        self.animate_gif()
+
+    def load_gif(self, gif_path):
+        try:
+            self.gif_frames = []
+            self.gif_durations = []
+            with Image.open(gif_path) as img:
+                while True:
+                    self.gif_frames.append(ImageTk.PhotoImage(img.copy()))
+                    self.gif_durations.append(img.info.get('duration', 100))
+                    try:
+                        img.seek(img.tell() + 1)
+                    except EOFError:
+                        break
+            if self.gif_frames:
+                self.gif_label.configure(image=self.gif_frames[0])
+                self.current_gif_frame = 0
+        except Exception as e:
+            print(f"GIF loading error: {e}")
+            self.gif_label.configure(text="", font=ctk.CTkFont(size=80))
+
+    def animate_gif(self):
+        if hasattr(self, 'gif_frames') and self.gif_frames:
+            self.current_gif_frame = (self.current_gif_frame + 1) % len(self.gif_frames)
+            self.gif_label.configure(image=self.gif_frames[self.current_gif_frame])
+            duration = self.gif_durations[self.current_gif_frame] if self.current_gif_frame < len(self.gif_durations) else 100
+            self.after(duration, self.animate_gif)
+        else:
+            self.after(100, self.animate_gif)
+
     def animate_progress(self):
         elapsed = time.time() - self.start_time
         total_time = 5.0
         progress = min(elapsed / total_time, 1.0)
         self.progress.set(progress)
-        
+
         step_index = int(progress * len(self.steps))
         if step_index >= len(self.steps):
             step_index = len(self.steps) - 1
         if step_index != self.current_step:
             self.current_step = step_index
             self.status_label.configure(text=self.steps[step_index])
-        
+
         if progress < 1.0:
             self.after(20, self.animate_progress)
         else:
@@ -87,27 +146,27 @@ class HelpWindow(ctk.CTkToplevel):
         self.resizable(False, False)
         self.configure(fg_color=("#0a0a1a", "#0d0d2b"))
         self.attributes('-topmost', True)
-        
+
         x = (self.winfo_screenwidth() // 2) - 210
         y = (self.winfo_screenheight() // 2) - 225
         self.geometry(f"+{x}+{y}")
-        
+
         try:
             icon_path = os.path.join(os.path.dirname(os.path.abspath(sys.argv[0] if getattr(sys, 'frozen', False) else __file__)), "icon.ico")
             if os.path.exists(icon_path):
                 self.iconbitmap(icon_path)
         except:
             pass
-        
+
         self.title_label = ctk.CTkLabel(self, text="КУДА ТЫКАТЬ", font=ctk.CTkFont(size=24, weight="bold"), text_color="#00d4ff")
         self.title_label.pack(pady=(15, 5))
-        
+
         self.info_label = ctk.CTkLabel(self, text="В открывшейся консоли введите цифру и нажмите Enter:", font=ctk.CTkFont(size=14), text_color="#a0aec0")
         self.info_label.pack(pady=(0, 10))
-        
+
         frame = ctk.CTkFrame(self, fg_color=("#1a1a2e", "#16213e"), corner_radius=10, border_width=1, border_color="#00d4ff")
         frame.pack(pady=5, padx=20, fill="x")
-        
+
         items = [
             ("1", "Установить сервис"),
             ("2", "Удалить сервис"),
@@ -121,20 +180,20 @@ class HelpWindow(ctk.CTkToplevel):
             ("10", "Диагностика"),
             ("11", "Тесты")
         ]
-        
+
         for i, (num, desc) in enumerate(items):
             row = i // 2
             col = i % 2
             label = ctk.CTkLabel(frame, text=f"{num} -> {desc}", font=ctk.CTkFont(size=13), text_color="#a0aec0")
             label.grid(row=row, column=col, padx=10, pady=3, sticky="w")
-        
+
         frame.grid_columnconfigure(0, weight=1)
         frame.grid_columnconfigure(1, weight=1)
-        
+
         self.close_btn = ctk.CTkButton(self, text="ПОНЯЛ, ЗАКРЫТЬ", command=self.destroy, font=ctk.CTkFont(size=14, weight="bold"), height=40, corner_radius=10, fg_color="#00b894", hover_color="#00a381")
         self.close_btn.pack(pady=(15, 15), padx=40, fill="x")
 
-class ZapretLauncher(ctk.CTk):
+class HuxHuxLauncher(ctk.CTk):
     def __init__(self):
         super().__init__()
         self.withdraw()
@@ -142,43 +201,43 @@ class ZapretLauncher(ctk.CTk):
         self.geometry("550x800")
         self.resizable(False, False)
         self.configure(fg_color=("#0a0a1a", "#0d0d2b"))
-        
+
         if getattr(sys, 'frozen', False):
             self.zapret_path = os.path.dirname(sys.executable)
         else:
             self.zapret_path = os.path.dirname(os.path.abspath(__file__))
-        
+
         try:
             icon_path = os.path.join(self.zapret_path, "icon.ico")
             if os.path.exists(icon_path):
                 self.iconbitmap(icon_path)
         except:
             pass
-        
+
         self.strategies = []
         self.update_available = False
         self.latest_version = ""
         self.download_url = ""
-        
+
         self.header_frame = ctk.CTkFrame(self, fg_color="transparent")
         self.header_frame.pack(pady=(20, 5), fill="x")
         self.title_label = ctk.CTkLabel(self.header_frame, text="HUX-HUX LAUNCHER", font=ctk.CTkFont(size=30, weight="bold"), text_color="#00d4ff")
         self.title_label.pack()
         self.version_label = ctk.CTkLabel(self.header_frame, text=f"Версия {CURRENT_VERSION} | Выберите стратегию", font=ctk.CTkFont(size=12), text_color="#718096")
         self.version_label.pack(pady=(0, 5))
-        
+
         self.update_frame = ctk.CTkFrame(self, fg_color=("#1a1a2e", "#16213e"), corner_radius=10, border_width=1, border_color="#f39c12")
         self.update_frame.pack(pady=5, padx=25, fill="x")
         self.update_label = ctk.CTkLabel(self.update_frame, text="Проверка обновлений...", font=ctk.CTkFont(size=12), text_color="#a0aec0")
         self.update_label.pack(pady=5)
         self.update_btn = ctk.CTkButton(self.update_frame, text="ПРОВЕРИТЬ ОБНОВЛЕНИЯ", command=self.check_updates, font=ctk.CTkFont(size=12, weight="bold"), height=30, corner_radius=8, fg_color="#2d3748", hover_color="#4a5568")
         self.update_btn.pack(pady=(0, 5))
-        
+
         self.status_frame = ctk.CTkFrame(self, fg_color=("#1a1a2e", "#16213e"), corner_radius=12, border_width=1, border_color="#00d4ff")
         self.status_frame.pack(pady=5, padx=25, fill="x")
         self.status_label = ctk.CTkLabel(self.status_frame, text="Статус: Не установлен", font=ctk.CTkFont(size=14, weight="bold"), text_color="#fc8181")
         self.status_label.pack(pady=8)
-        
+
         self.list_frame = ctk.CTkFrame(self, fg_color=("#1a1a2e", "#16213e"), corner_radius=15, border_width=2, border_color="#00d4ff")
         self.list_frame.pack(pady=10, padx=25, fill="both", expand=True)
         self.list_label = ctk.CTkLabel(self.list_frame, text="СТРАТЕГИИ", font=ctk.CTkFont(size=14, weight="bold"), text_color="#00d4ff")
@@ -186,15 +245,15 @@ class ZapretLauncher(ctk.CTk):
         self.scroll_frame = ctk.CTkScrollableFrame(self.list_frame, fg_color="transparent", height=280)
         self.scroll_frame.pack(pady=5, padx=10, fill="both", expand=True)
         self.load_strategies()
-        
+
         self.settings_frame = ctk.CTkFrame(self, fg_color=("#1a1a2e", "#16213e"), corner_radius=15, border_width=2, border_color="#f39c12")
         self.settings_frame.pack(pady=10, padx=25, fill="x")
         self.settings_label = ctk.CTkLabel(self.settings_frame, text="НАСТРОЙКИ", font=ctk.CTkFont(size=14, weight="bold"), text_color="#f39c12")
         self.settings_label.pack(pady=(8, 5))
-        
+
         self.settings_btn = ctk.CTkButton(self.settings_frame, text="ОТКРЫТЬ НАСТРОЙКИ", command=self.open_settings, font=ctk.CTkFont(size=15, weight="bold"), height=45, corner_radius=10, fg_color="#2d3748", hover_color="#4a5568", border_width=1, border_color="#f39c12")
         self.settings_btn.pack(pady=(5, 10), padx=15, fill="x")
-        
+
         self.btn_frame = ctk.CTkFrame(self, fg_color="transparent")
         self.btn_frame.pack(pady=5, padx=25, fill="x")
         self.refresh_btn = ctk.CTkButton(self.btn_frame, text="ОБНОВИТЬ СПИСОК", command=self.refresh_strategies, font=ctk.CTkFont(size=13, weight="bold"), height=35, corner_radius=10, fg_color="#4a5568", hover_color="#718096")
@@ -203,17 +262,17 @@ class ZapretLauncher(ctk.CTk):
         self.remove_btn.grid(row=0, column=1, padx=5, pady=5, sticky="ew")
         self.btn_frame.grid_columnconfigure(0, weight=1)
         self.btn_frame.grid_columnconfigure(1, weight=1)
-        
+
         self.footer_label = ctk.CTkLabel(self, text=f"{self.zapret_path}", font=ctk.CTkFont(size=9), text_color="#4a5568")
         self.footer_label.pack(pady=(0, 10))
-        
+
         self.after(1000, self.check_updates)
         self.after(500, self.check_status)
-    
+
     def compare_versions(self, v1, v2):
         v1_parts = [int(x) for x in v1.split('.')]
         v2_parts = [int(x) for x in v2.split('.')]
-        
+
         for i in range(max(len(v1_parts), len(v2_parts))):
             v1_val = v1_parts[i] if i < len(v1_parts) else 0
             v2_val = v2_parts[i] if i < len(v2_parts) else 0
@@ -222,7 +281,7 @@ class ZapretLauncher(ctk.CTk):
             elif v1_val > v2_val:
                 return False
         return False
-    
+
     def check_updates(self):
         def check():
             try:
@@ -231,7 +290,7 @@ class ZapretLauncher(ctk.CTk):
                 if response.status_code == 200:
                     data = response.json()
                     latest = data.get("tag_name", "").replace("v", "")
-                    
+
                     if latest and self.compare_versions(CURRENT_VERSION, latest):
                         self.update_available = True
                         self.latest_version = latest
@@ -245,14 +304,14 @@ class ZapretLauncher(ctk.CTk):
                     self.update_label.configure(text="Не удалось проверить обновления", text_color="#fc8181")
             except:
                 self.update_label.configure(text="Ошибка проверки обновлений", text_color="#fc8181")
-        
+
         Thread(target=check, daemon=True).start()
-    
+
     def download_update(self):
         if self.download_url:
             if messagebox.askyesno("Обновление", f"Доступна новая версия {self.latest_version}\n\nОткрыть страницу загрузки?"):
                 webbrowser.open(self.download_url)
-    
+
     def get_all_bat_files(self):
         files = []
         try:
@@ -264,7 +323,7 @@ class ZapretLauncher(ctk.CTk):
         except Exception as e:
             print(f"Ошибка: {e}")
         return files
-    
+
     def load_strategies(self):
         for widget in self.scroll_frame.winfo_children():
             widget.destroy()
@@ -279,11 +338,11 @@ class ZapretLauncher(ctk.CTk):
             label = ctk.CTkLabel(self.scroll_frame, text="Нет стратегий!\n\nПоложи .bat файлы в папку:\n" + f"{self.zapret_path}\n\nи нажми 'Обновить список'", font=ctk.CTkFont(size=13), text_color="#fc8181", justify="center")
             label.pack(pady=30)
             self.list_label.configure(text="СТРАТЕГИИ НЕ НАЙДЕНЫ")
-    
+
     def refresh_strategies(self):
         self.load_strategies()
         self.check_status()
-    
+
     def run_strategy(self, name):
         if not ctypes.windll.shell32.IsUserAnAdmin():
             if not messagebox.askyesno("Права администратора", "Для запуска стратегии нужны права администратора.\n\nРазрешить запуск от имени администратора?"):
@@ -301,26 +360,26 @@ class ZapretLauncher(ctk.CTk):
             self.after(3000, self.check_status)
         except Exception as e:
             self.status_label.configure(text=f"Ошибка: {str(e)[:50]}", text_color="#fc8181")
-    
+
     def open_settings(self):
         if not ctypes.windll.shell32.IsUserAnAdmin():
             messagebox.showwarning("Внимание!", "Для настроек нужны права администратора!\nПерезапустите программу от имени администратора.")
             return
-        
+
         try:
             service_path = os.path.join(self.zapret_path, "service.bat")
             if not os.path.exists(service_path):
                 messagebox.showerror("Ошибка", f"Файл service.bat не найден!\n\nПуть: {self.zapret_path}")
                 return
-            
+
             subprocess.Popen(f'start cmd /c "{service_path}" admin', cwd=self.zapret_path, shell=True)
-            
+
             help_window = HelpWindow()
             help_window.focus()
-            
+
         except Exception as e:
             messagebox.showerror("Ошибка", str(e))
-    
+
     def check_status(self):
         try:
             result = subprocess.run('sc query "zapret"', capture_output=True, text=True, shell=True, timeout=5, creationflags=subprocess.CREATE_NO_WINDOW)
@@ -335,7 +394,7 @@ class ZapretLauncher(ctk.CTk):
                 self.status_label.configure(text="Статус: НЕ УСТАНОВЛЕН", text_color="#fc8181")
         except:
             pass
-    
+
     def remove_service(self):
         if not messagebox.askyesno("Подтверждение", "Вы уверены, что хотите удалить сервис Zapret?"):
             return
@@ -351,7 +410,7 @@ class ZapretLauncher(ctk.CTk):
             messagebox.showerror("Ошибка", str(e))
 
 if __name__ == "__main__":
-    app = ZapretLauncher()
+    app = HuxHuxLauncher()
     splash = SplashScreen()
     splash.update()
     def show_main():
