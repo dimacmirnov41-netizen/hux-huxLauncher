@@ -1,4 +1,4 @@
-# ZapretLauncher 
+# hux-huxLauncher
 
 Простой и красивый лаунчер для управления сервисом **Zapret** (версия 1.9.8c).
 
