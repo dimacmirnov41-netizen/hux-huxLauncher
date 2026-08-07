@@ -13,9 +13,35 @@ from PIL import Image, ImageTk
 ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("blue")
 
-CURRENT_VERSION = "1.0.7"
+CURRENT_VERSION = "1.0.7.378"
 GITHUB_REPO = "dimacmirnov41-netizen/hux-huxLauncher"
 GITHUB_API_URL = f"https://api.github.com/repos/{GITHUB_REPO}/releases/latest"
+
+def get_app_path():
+    try:
+        return __compiled__.containing_dir
+    except NameError:
+        if getattr(sys, 'frozen', False):
+            exe_path = sys.argv[0]
+            if '~' in exe_path:
+                try:
+                    import ctypes
+                    buffer = ctypes.create_unicode_buffer(260)
+                    ret = ctypes.windll.kernel32.GetLongPathNameW(exe_path, buffer, 260)
+                    if ret:
+                        exe_path = buffer.value
+                except Exception:
+                    pass
+            return os.path.dirname(os.path.abspath(exe_path))
+        else:
+            return os.path.dirname(os.path.abspath(__file__))
+
+def get_base_path():
+
+    return os.path.dirname(os.path.abspath(__file__))
+
+APP_PATH = get_app_path()
+BASE_PATH = get_base_path()
 
 LANG = {
     "ru": {
@@ -246,13 +272,13 @@ LANG = {
         "refresh": "ОБНОВИТЬ СПИСОК",
         "remove": "ВЫРУБИТЬ СЕРВИС",
         "update_check": "Проверка обнов...",
-        "update_available": "Есть новая версия: {}",
-        "update_latest": "Ты в теме, брат! Последняя версия",
-        "update_error": "Не пробить обновы",
-        "update_error2": "Ошибка с обновами",
-        "check_updates": "ПРОВЕРИТЬ ОБНОВЫ",
-        "download_update": "ЗАБРАТЬ ОБНОВУ",
-        "no_strategies": "Стратегий нет!\n\nКидай .bat файлы в папку:\n{}\n\nи жми 'Обновить список'",
+        "update_available": "ты не в теме брат: {} ",
+        "update_latest": "Ты в теме, брат!",
+        "update_error": "Не пробит",
+        "update_error2": "танк подорвали",
+        "check_updates": "проверить что сейчас в теме",
+        "download_update": "скачать обнову",
+        "no_strategies": "йоу\n\nты забыл закинуть кидай в :\n{}\n\n",
         "admin_required": "Права админа",
         "admin_required_msg": "Для запуска стратегии нужны права админа.\n\nРазрешишь запуск от админа?",
         "settings_admin": "Внимание!",
@@ -264,11 +290,11 @@ LANG = {
         "update_available_msg": "Есть новая версия {}\n\nОткрыть страницу загрузки?",
         "loading": "Грузим...",
         "ready": "Готово, брат!",
-        "steps": ["Грузим иконки...", "Проверяем обновы...", "Грузим конфиг...", "Готовим интерфейс...", "Погнали..."],
+        "steps": ["Грузим иконки...", "Пьём пиво...", "Грузим конфиг...", "Готовим интерфейс...", "Взрыв вселеной...", "Погнали..."],
         "documentation": "Документация",
-        "where_to_click": "КУДА ТЫКАТЬ, БРАТ",
+        "where_to_click": "КУДА ТЫКАТЬ БРАТ",
         "doc_instruction": "В открывшейся консоли введи цифру и жми Enter:",
-        "doc_close": "ВРУБИЛСЯ, ЗАКРЫТЬ",
+        "doc_close": "понял? закрырыть",
         "doc_items": [
             ("1", "Врубить сервис"),
             ("2", "Вырубить сервис"),
@@ -294,13 +320,14 @@ class SplashScreen(ctk.CTkToplevel):
         self.geometry("400x480")
         self.resizable(False, False)
         self.overrideredirect(True)
+        self.attributes('-topmost', True)
         self.configure(fg_color=("#0a0a1a", "#0d0d2b"))
         self.update_idletasks()
         x = (self.winfo_screenwidth() // 2) - 200
         y = (self.winfo_screenheight() // 2) - 240
         self.geometry(f"+{x}+{y}")
         try:
-            icon_path = os.path.join(os.path.dirname(os.path.abspath(sys.argv[0] if getattr(sys, 'frozen', False) else __file__)), "icon.ico")
+            icon_path = os.path.join(BASE_PATH, "icon.ico")
             if os.path.exists(icon_path):
                 self.iconbitmap(icon_path)
         except:
@@ -325,12 +352,7 @@ class SplashScreen(ctk.CTkToplevel):
         self.gif_label = ctk.CTkLabel(self.center_frame, text="")
         self.gif_label.pack(expand=True)
 
-        if getattr(sys, 'frozen', False):
-            base_path = sys._MEIPASS
-        else:
-            base_path = os.path.dirname(os.path.abspath(__file__))
-
-        gif_path = os.path.join(base_path, "hux.gif")
+        gif_path = os.path.join(BASE_PATH, "hux.gif")
 
         if os.path.exists(gif_path):
             self.load_gif(gif_path)
@@ -420,7 +442,7 @@ class HelpWindow(ctk.CTkToplevel):
         self.geometry(f"+{x}+{y}")
 
         try:
-            icon_path = os.path.join(os.path.dirname(os.path.abspath(sys.argv[0] if getattr(sys, 'frozen', False) else __file__)), "icon.ico")
+            icon_path = os.path.join(BASE_PATH, "icon.ico")
             if os.path.exists(icon_path):
                 self.iconbitmap(icon_path)
         except:
@@ -454,17 +476,12 @@ class HuxHuxLauncher(ctk.CTk):
         self.text = LANG[self.lang]
         self.withdraw()
         self.title("hux-huxLauncher")
-        self.geometry("580x820")
+        self.geometry("600x850")
         self.resizable(False, False)
         self.configure(fg_color=("#0a0a1a", "#0d0d2b"))
 
-        if getattr(sys, 'frozen', False):
-            self.zapret_path = os.path.dirname(sys.executable)
-        else:
-            self.zapret_path = os.path.dirname(os.path.abspath(__file__))
-
         try:
-            icon_path = os.path.join(self.zapret_path, "icon.ico")
+            icon_path = os.path.join(BASE_PATH, "icon.ico")
             if os.path.exists(icon_path):
                 self.iconbitmap(icon_path)
         except:
@@ -474,6 +491,7 @@ class HuxHuxLauncher(ctk.CTk):
         self.update_available = False
         self.latest_version = ""
         self.download_url = ""
+        self.update_state = None
 
         self.top_controls = ctk.CTkFrame(self, fg_color="transparent", height=50)
         self.top_controls.pack(pady=(10, 0), padx=20, fill="x")
@@ -542,7 +560,7 @@ class HuxHuxLauncher(ctk.CTk):
         self.btn_frame.grid_columnconfigure(0, weight=1)
         self.btn_frame.grid_columnconfigure(1, weight=1)
 
-        self.footer_label = ctk.CTkLabel(self, text=f"{self.zapret_path}", font=ctk.CTkFont(size=9), text_color=("black", "white"))
+        self.footer_label = ctk.CTkLabel(self, text=f"{APP_PATH}", font=ctk.CTkFont(size=9), text_color=("black", "white"))
         self.footer_label.pack(pady=(0, 10))
 
         self.after(1000, self.check_updates)
@@ -563,8 +581,7 @@ class HuxHuxLauncher(ctk.CTk):
     def update_ui_text(self):
         self.title_label.configure(text=self.text["title"])
         self.version_label.configure(text=f"{self.text['version']} {CURRENT_VERSION} | {self.text['strategies']}")
-        self.update_label.configure(text=self.text["update_check"])
-        self.update_btn.configure(text=self.text["check_updates"])
+        self.refresh_update_label()
         self.status_label.configure(text=self.text["status_not_installed"])
         self.list_label.configure(text=self.text["strategies"])
         self.settings_label.configure(text=self.text["settings"])
@@ -587,9 +604,31 @@ class HuxHuxLauncher(ctk.CTk):
                 return False
         return False
 
+    def refresh_update_label(self):
+        state = self.update_state
+        if state == "available":
+            self.update_label.configure(text=self.text["update_available"].format(self.latest_version), text_color="#48bb78")
+            self.update_btn.configure(text=self.text["download_update"], fg_color="#00b894", hover_color="#00a381", command=self.download_update)
+        elif state == "latest":
+            self.update_label.configure(text=self.text["update_latest"], text_color="#48bb78")
+            self.update_btn.configure(text=self.text["check_updates"], fg_color="#2d3748", hover_color="#4a5568", command=self.check_updates)
+        elif state == "error":
+            self.update_label.configure(text=self.text["update_error"], text_color="#fc8181")
+            self.update_btn.configure(text=self.text["check_updates"], fg_color="#2d3748", hover_color="#4a5568", command=self.check_updates)
+        elif state == "error2":
+            self.update_label.configure(text=self.text["update_error2"], text_color="#fc8181")
+            self.update_btn.configure(text=self.text["check_updates"], fg_color="#2d3748", hover_color="#4a5568", command=self.check_updates)
+        elif state == "checking":
+            self.update_label.configure(text=self.text["update_check"], text_color="#f39c12")
+            self.update_btn.configure(text=self.text["check_updates"])
+        else:
+            self.update_label.configure(text=self.text["update_check"], text_color=("black", "white"))
+            self.update_btn.configure(text=self.text["check_updates"], fg_color="#2d3748", hover_color="#4a5568", command=self.check_updates)
+
     def check_updates(self):
         def check():
             try:
+                self.update_state = "checking"
                 self.update_label.configure(text=self.text["update_check"], text_color="#f39c12")
                 response = requests.get(GITHUB_API_URL, timeout=10)
                 if response.status_code == 200:
@@ -600,14 +639,18 @@ class HuxHuxLauncher(ctk.CTk):
                         self.update_available = True
                         self.latest_version = latest
                         self.download_url = data.get("html_url", "")
+                        self.update_state = "available"
                         self.update_label.configure(text=self.text["update_available"].format(latest), text_color="#48bb78")
                         self.update_btn.configure(text=self.text["download_update"], fg_color="#00b894", hover_color="#00a381", command=self.download_update)
                     else:
+                        self.update_state = "latest"
                         self.update_label.configure(text=self.text["update_latest"], text_color="#48bb78")
                         self.update_btn.configure(text=self.text["check_updates"], fg_color="#2d3748", hover_color="#4a5568", command=self.check_updates)
                 else:
+                    self.update_state = "error"
                     self.update_label.configure(text=self.text["update_error"], text_color="#fc8181")
             except:
+                self.update_state = "error2"
                 self.update_label.configure(text=self.text["update_error2"], text_color="#fc8181")
 
         Thread(target=check, daemon=True).start()
@@ -620,8 +663,8 @@ class HuxHuxLauncher(ctk.CTk):
     def get_all_bat_files(self):
         files = []
         try:
-            for f in os.listdir(self.zapret_path):
-                full_path = os.path.join(self.zapret_path, f)
+            for f in os.listdir(APP_PATH):
+                full_path = os.path.join(APP_PATH, f)
                 if os.path.isfile(full_path) and f.endswith('.bat') and f.lower() != 'service.bat':
                     files.append(f)
             files.sort(key=lambda x: (0 if x.lower() == 'general.bat' else 1, x.lower()))
@@ -640,7 +683,7 @@ class HuxHuxLauncher(ctk.CTk):
                 btn.pack(pady=2, padx=5, fill="x")
             self.list_label.configure(text=self.text["strategies_found"].format(len(self.strategies)))
         else:
-            label = ctk.CTkLabel(self.scroll_frame, text=self.text["no_strategies"].format(self.zapret_path), font=ctk.CTkFont(size=13), text_color="#fc8181", justify="center")
+            label = ctk.CTkLabel(self.scroll_frame, text=self.text["no_strategies"].format(APP_PATH), font=ctk.CTkFont(size=13), text_color="#fc8181", justify="center")
             label.pack(pady=30)
             self.list_label.configure(text=self.text["strategies_not_found"])
 
@@ -659,8 +702,8 @@ class HuxHuxLauncher(ctk.CTk):
         self.status_label.configure(text=f"Запуск: {name}...", text_color="#f39c12")
         self.update()
         try:
-            full_path = os.path.join(self.zapret_path, name)
-            subprocess.Popen(f'start cmd /c "{full_path}"', cwd=self.zapret_path, shell=True)
+            full_path = os.path.join(APP_PATH, name)
+            subprocess.Popen(f'start cmd /c "{full_path}"', cwd=APP_PATH, shell=True)
             self.status_label.configure(text=f"Запущена: {name}", text_color="#48bb78")
             self.after(3000, self.check_status)
         except Exception as e:
@@ -672,12 +715,12 @@ class HuxHuxLauncher(ctk.CTk):
             return
 
         try:
-            service_path = os.path.join(self.zapret_path, "service.bat")
+            service_path = os.path.join(APP_PATH, "service.bat")
             if not os.path.exists(service_path):
-                messagebox.showerror("Ошибка", self.text["service_not_found"].format(self.zapret_path))
+                messagebox.showerror("Ошибка", self.text["service_not_found"].format(APP_PATH))
                 return
 
-            subprocess.Popen(f'start cmd /c "{service_path}" admin', cwd=self.zapret_path, shell=True)
+            subprocess.Popen(f'start cmd /c "{service_path}" admin', cwd=APP_PATH, shell=True)
 
             help_window = HelpWindow(self.lang)
             help_window.focus()
