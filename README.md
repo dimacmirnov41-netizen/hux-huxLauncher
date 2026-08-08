@@ -20,3 +20,10 @@
 ## Паника антивирусов (Ложные срабатывания)
 
 * зато что я незнакомец ну 0 звёзд то у меня там в вирус тотал там будет новогодняя ёлка
+* а ещё есть SmartScreen если увидите это :
+<img width="531" height="500" alt="image2" src="https://github.com/user-attachments/assets/6127da03-cb24-42da-84e7-68bab7b13ecd" />
+* то не реагируйте там просто вот :
+<img width="271" height="71" alt="image" src="https://github.com/user-attachments/assets/2d055fd1-3a61-4165-81aa-a7cde53d23d0" />
+
+
+
