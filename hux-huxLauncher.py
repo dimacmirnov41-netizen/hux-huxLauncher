@@ -9,11 +9,13 @@ import webbrowser
 from tkinter import messagebox
 from threading import Thread
 from PIL import Image, ImageTk
+import re
+import tempfile
 
 ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("blue")
 
-CURRENT_VERSION = "1.0.7.378"
+CURRENT_VERSION = "1.0.7.741"
 GITHUB_REPO = "dimacmirnov41-netizen/hux-huxLauncher"
 GITHUB_API_URL = f"https://api.github.com/repos/{GITHUB_REPO}/releases/latest"
 
@@ -37,7 +39,6 @@ def get_app_path():
             return os.path.dirname(os.path.abspath(__file__))
 
 def get_base_path():
-
     return os.path.dirname(os.path.abspath(__file__))
 
 APP_PATH = get_app_path()
@@ -294,7 +295,7 @@ LANG = {
         "documentation": "Документация",
         "where_to_click": "КУДА ТЫКАТЬ БРАТ",
         "doc_instruction": "В открывшейся консоли введи цифру и жми Enter:",
-        "doc_close": "понял? закрыть",
+        "doc_close": "понял? закрырыть",
         "doc_items": [
             ("1", "Врубить сервис"),
             ("2", "Вырубить сервис"),
@@ -492,6 +493,7 @@ class HuxHuxLauncher(ctk.CTk):
         self.latest_version = ""
         self.download_url = ""
         self.update_state = None
+        self.empty_clicks = 0  # Счётчик кликов по пустому списку
 
         self.top_controls = ctk.CTkFrame(self, fg_color="transparent", height=50)
         self.top_controls.pack(pady=(10, 0), padx=20, fill="x")
@@ -542,6 +544,10 @@ class HuxHuxLauncher(ctk.CTk):
         self.list_label.pack(pady=(10, 5))
         self.scroll_frame = ctk.CTkScrollableFrame(self.list_frame, fg_color="transparent", height=280)
         self.scroll_frame.pack(pady=5, padx=10, fill="both", expand=True)
+        
+        # Клик по пустому списку
+        self.scroll_frame.bind("<Button-1>", self.on_empty_click)
+        
         self.load_strategies()
 
         self.settings_frame = ctk.CTkFrame(self, fg_color=("#1a1a2e", "#16213e"), corner_radius=15, border_width=2, border_color="#f39c12")
@@ -565,6 +571,31 @@ class HuxHuxLauncher(ctk.CTk):
 
         self.after(1000, self.check_updates)
         self.after(500, self.check_status)
+
+    def on_empty_click(self, event):
+        """Обработка клика по пустому списку стратегий"""
+        if not self.strategies:
+            self.empty_clicks += 1
+            if self.empty_clicks >= 10:
+                self.empty_clicks = 0
+                self.play_video()
+
+    def play_video(self):
+        """Воспроизведение видео 0800.mp4"""
+        try:
+            video_path = os.path.join(BASE_PATH, "0800.mp4")
+            if not os.path.exists(video_path):
+                video_path = os.path.join(APP_PATH, "0800.mp4")
+            
+            if os.path.exists(video_path):
+                if sys.platform == "win32":
+                    os.startfile(video_path)
+                else:
+                    subprocess.Popen(['xdg-open', video_path])
+            else:
+                messagebox.showinfo("0800", "Видео не найдено!\nПоложи 0800.mp4 рядом с программой.")
+        except Exception as e:
+            print(f"Ошибка воспроизведения видео: {e}")
 
     def change_lang(self, choice):
         lang_map = {
@@ -625,11 +656,14 @@ class HuxHuxLauncher(ctk.CTk):
             self.update_label.configure(text=self.text["update_check"], text_color=("black", "white"))
             self.update_btn.configure(text=self.text["check_updates"], fg_color="#2d3748", hover_color="#4a5568", command=self.check_updates)
 
+    def ui(self, func):
+        self.after(0, func)
+
     def check_updates(self):
         def check():
+            self.update_state = "checking"
+            self.ui(lambda: self.update_label.configure(text=self.text["update_check"], text_color="#f39c12"))
             try:
-                self.update_state = "checking"
-                self.update_label.configure(text=self.text["update_check"], text_color="#f39c12")
                 response = requests.get(GITHUB_API_URL, timeout=10)
                 if response.status_code == 200:
                     data = response.json()
@@ -640,18 +674,22 @@ class HuxHuxLauncher(ctk.CTk):
                         self.latest_version = latest
                         self.download_url = data.get("html_url", "")
                         self.update_state = "available"
-                        self.update_label.configure(text=self.text["update_available"].format(latest), text_color="#48bb78")
-                        self.update_btn.configure(text=self.text["download_update"], fg_color="#00b894", hover_color="#00a381", command=self.download_update)
+                        self.ui(lambda: (
+                            self.update_label.configure(text=self.text["update_available"].format(latest), text_color="#48bb78"),
+                            self.update_btn.configure(text=self.text["download_update"], fg_color="#00b894", hover_color="#00a381", command=self.download_update)
+                        ))
                     else:
                         self.update_state = "latest"
-                        self.update_label.configure(text=self.text["update_latest"], text_color="#48bb78")
-                        self.update_btn.configure(text=self.text["check_updates"], fg_color="#2d3748", hover_color="#4a5568", command=self.check_updates)
+                        self.ui(lambda: (
+                            self.update_label.configure(text=self.text["update_latest"], text_color="#48bb78"),
+                            self.update_btn.configure(text=self.text["check_updates"], fg_color="#2d3748", hover_color="#4a5568", command=self.check_updates)
+                        ))
                 else:
                     self.update_state = "error"
-                    self.update_label.configure(text=self.text["update_error"], text_color="#fc8181")
+                    self.ui(lambda: self.update_label.configure(text=self.text["update_error"], text_color="#fc8181"))
             except:
                 self.update_state = "error2"
-                self.update_label.configure(text=self.text["update_error2"], text_color="#fc8181")
+                self.ui(lambda: self.update_label.configure(text=self.text["update_error2"], text_color="#fc8181"))
 
         Thread(target=check, daemon=True).start()
 
@@ -667,7 +705,17 @@ class HuxHuxLauncher(ctk.CTk):
                 full_path = os.path.join(APP_PATH, f)
                 if os.path.isfile(full_path) and f.endswith('.bat') and f.lower() != 'service.bat':
                     files.append(f)
-            files.sort(key=lambda x: (0 if x.lower() == 'general.bat' else 1, x.lower()))
+            def natural(name):
+                return re.sub(r'\d+', lambda m: m.group().zfill(10), name)
+
+            def sort_key(x):
+                name = x.lower()
+                if name == 'general.bat':
+                    return (0, '')
+                if name.startswith('general ('):
+                    return (1, natural(name))
+                return (2, natural(name))
+            files.sort(key=sort_key)
         except Exception as e:
             print(f"Ошибка: {e}")
         return files
@@ -677,6 +725,7 @@ class HuxHuxLauncher(ctk.CTk):
             widget.destroy()
         self.strategies = self.get_all_bat_files()
         if self.strategies:
+            self.empty_clicks = 0
             for name in self.strategies:
                 display_name = name.replace('.bat', '')
                 btn = ctk.CTkButton(self.scroll_frame, text=f"> {display_name}", command=lambda n=name: self.run_strategy(n), font=ctk.CTkFont(size=12), height=35, corner_radius=8, fg_color="#2d3748", hover_color="#00b894", anchor="w", border_width=1, border_color="#4a5568")
@@ -700,7 +749,6 @@ class HuxHuxLauncher(ctk.CTk):
             self.destroy()
             return
         self.status_label.configure(text=f"Запуск: {name}...", text_color="#f39c12")
-        self.update()
         try:
             full_path = os.path.join(APP_PATH, name)
             subprocess.Popen(f'start cmd /c "{full_path}"', cwd=APP_PATH, shell=True)
