@@ -15,7 +15,7 @@ import tempfile
 ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("blue")
 
-CURRENT_VERSION = "1.0.7.741"
+CURRENT_VERSION = "1.0.7.742"
 GITHUB_REPO = "ky4ka-boroxla/hux-huxLauncher"
 GITHUB_API_URL = f"https://api.github.com/repos/{GITHUB_REPO}/releases/latest"
 
