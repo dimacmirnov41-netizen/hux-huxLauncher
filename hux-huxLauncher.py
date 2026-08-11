@@ -16,7 +16,7 @@ ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("blue")
 
 CURRENT_VERSION = "1.0.7.741"
-GITHUB_REPO = "dimacmirnov41-netizen/hux-huxLauncher"
+GITHUB_REPO = "ky4ka-boroxla/hux-huxLauncher"
 GITHUB_API_URL = f"https://api.github.com/repos/{GITHUB_REPO}/releases/latest"
 
 def get_app_path():
